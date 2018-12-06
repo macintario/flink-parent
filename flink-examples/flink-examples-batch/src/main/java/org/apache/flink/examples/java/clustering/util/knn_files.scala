@@ -52,7 +52,7 @@ object knn_files {
       "/git/macintario_at_gmail/Diplomado Big Data/Modulo 4/flinka/flink(1)/flink-master/flink-examples/flink-examples-batch/src/main/java/org/apache/flink/examples/java/clustering/util/validate.csv"
     )
     // Se modifica para no usar un "for" y usar directamente "map"
-    val clasificados = pointsClas.collect().map(x => asignaEtiqueta(x, pointsTrain, k))
+    val clasificados = pointsClas.collect().map(x => asignaCategoria(x, pointsTrain, k))
     //Muestra los resultados
     print("Parámetro k=")
     println(k)
@@ -62,7 +62,7 @@ object knn_files {
   }
   // Se extrae el código del ejercicio de clase y se implementa como función
   // para usarla en el "map"
-  def asignaEtiqueta  (pV: PointValidate, pointsTrain: scala.DataSet[Point], k:Int) ={
+  def asignaCategoria  (pV: PointValidate, pointsTrain: scala.DataSet[Point], k:Int) ={
     val train = pointsTrain
     var puntofinal = train.map(x => NewPoint(x.label,
       math.sqrt(   //Se modifica la distancia para que lo haga en cuatro dimensiones
