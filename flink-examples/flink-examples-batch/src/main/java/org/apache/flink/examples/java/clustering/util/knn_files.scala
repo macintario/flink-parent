@@ -29,10 +29,8 @@ object knn_files {
     val pointsClas : scala.DataSet[PointValidate] = env.readCsvFile(
       "/git/macintario_at_gmail/Diplomado Big Data/Modulo 4/flinka/flink(1)/flink-master/flink-examples/flink-examples-batch/src/main/java/org/apache/flink/examples/java/clustering/util/validate.csv"
     )
-    var salida:  List[NewPoint] =  List.empty[NewPoint]
 
     val puntos = pointsClas.collect()
-    var i: Int  = 0
     for (dot <- puntos){
       val train = pointsTrain
       val puntofinal = train.map(x => NewPoint(x.label,
@@ -49,11 +47,6 @@ object knn_files {
         .sum(1)
         .sortPartition(1,DESCENDING)
         .first(1)
-        i = i + 1
-        for(np <- puntofinal.collect()){
-          salida::List(np)
-          println(np)
-        }
 
     }
     println(salida.length)
