@@ -6,6 +6,7 @@ import org.apache.flink.streaming.api.windowing.time.Time
 
 
 
+
 object scala_streaming {
 
   def main(args: Array[String]) {
@@ -27,11 +28,8 @@ object scala_streaming {
     }//catch
     val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
     val text: DataStream[String] = env.socketTextStream(hostname,port,delimiter = '\n')
-    val wc = text
-      .flatMap(w => w.split("(?:^|(?<=\\s))(?=(\\S+\\s+\\S+)(?=\\s|$))/g"))
-//      .flatMap(w => w.split("(\\S+\\s+\\S+)/gm"))
-    println(wc)
-val windowCounts = wc
+    val windowCounts = text
+      .flatMap(w => w.split("\\s"))
       .map(w => WordWithCount(w,1))
       .keyBy("word")
       .timeWindow(Time.seconds(5))
