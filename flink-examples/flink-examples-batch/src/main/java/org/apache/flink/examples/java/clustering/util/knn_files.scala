@@ -57,19 +57,21 @@ object knn_files {
     print("Parámetro k=")
     println(k)
     println("Resultados")
-    println(clasificados)
-    //clasificados.
+    for(clasificado<-clasificados){
+      println(clasificado)
+    }
+
   }
   // Se extrae el código del ejercicio de clase y se implementa como función
   // para usarla en el "map"
   def asignaEtiqueta  (pV: PointValidate, pointsTrain: scala.DataSet[Point], k:Int) ={
     val train = pointsTrain
-    var puntofinal = train.map(x => NewPoint(x.label,
+    var puntofinal = train.map(l => NewPoint(l.label,
       math.sqrt(   //Se modifica la distancia para que lo haga en cuatro dimensiones
-        (pV.x-x.x)*(pV.x-x.x)
-          +(pV.y-x.y)*(pV.y-x.y)
-          +(pV.w-x.w)*(pV.w-x.w)
-          +(pV.z-x.z)*(pV.z-x.z)
+           (pV.x-l.x)*(pV.x-l.x)
+          +(pV.y-l.y)*(pV.y-l.y)
+          +(pV.w-l.w)*(pV.w-l.w)
+          +(pV.z-l.z)*(pV.z-l.z)
       )))
       .sortPartition(1,order = ASCENDING)
       .first(k)
