@@ -29,7 +29,7 @@ object scala_streaming {
     val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
     val text: DataStream[String] = env.socketTextStream(hostname,port,delimiter = '\n')
     val windowCounts = text
-      .flatMap(w => w.split("\\s"))
+      .flatMap(w => w.split("(?<!\\G\\S+)\\s"))
       .map(w => WordWithCount(w,1))
       .keyBy("word")
       .timeWindow(Time.seconds(5))
